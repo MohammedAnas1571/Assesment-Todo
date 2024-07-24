@@ -6,6 +6,7 @@ import handleApiError from "../utils/HandleApiError";
 import toast from "react-hot-toast";
 import { useNavigate, Link } from "react-router-dom";
 import Input from "../components/Input";
+import Oauth from "../components/Oauth";
 
 type LoginForm = {
   email: string;
@@ -65,10 +66,10 @@ const Login = () => {
             <p className="text-sm text-red-500">{errors.password.message}</p>
           )}
 
-          <button className="w-full bg-blue-600 text-white p-2 rounded-lg">
+          <button className="w-full bg-blue-600 text-white p-2 ">
             Login
           </button>
-        </form>
+    
         <div className="text-center mt-4">
           <p className="font-semibold">
             Don't have an account?{" "}
@@ -77,11 +78,10 @@ const Login = () => {
             </Link>
           </p>
         </div>
-        <div className="text-center mt-4">
-          <button className="bg-blue-600 text-white p-2 rounded-lg mt-2">
-            Login with <span className="font-bold">Google</span>
-          </button>
+        <div className="text-center mt-3">
+          <Oauth/>
         </div>
+        </form>
       </div>
     </div>
   );
