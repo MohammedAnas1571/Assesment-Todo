@@ -10,7 +10,7 @@ export interface Task {
   description: string;
   status: 'Todo' | 'InProgress' | 'Done';
   createdAt: string; 
-  taskNumber:string;
+  title:string;
 }
 
 const Home: React.FC = () => {

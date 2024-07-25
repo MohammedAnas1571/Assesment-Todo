@@ -26,8 +26,13 @@ export const signUpSchema = z.object({
 
 
 export const taskSchema = z.object({
-    taskNumber: z.string().min(1,"Task number is required"), 
+    title: z.string().min(1,"Task number is required"), 
     description: z.string().min(5, "Description must be at least 5 characters long"),
 });
 
+export const taskEditSchema = z.object({
+  title: z.string().min(1, 'Title is required'),
+  description: z.string().min(1, 'Description is required'),
+  status: z.enum(['Todo', 'InProgress', 'Done'])
+});
 

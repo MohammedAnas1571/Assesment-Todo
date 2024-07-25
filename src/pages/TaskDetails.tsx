@@ -2,24 +2,19 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import handleApiError from '../utils/HandleApiError';
+import { Task } from './Home';
 
-// Define the Task type (make sure this matches your API response structure)
-interface Task {
-  taskNumber: string;
-  description: string;
-  createdAt: string;
-}
 
 const TaskDetails: React.FC = () => {
   const navigate = useNavigate();
-  const { taskId } = useParams<{ taskId: string }>(); 
-  const [task, setTask] = useState<Task | undefined>(undefined); 
+  const { taskId } = useParams<{ taskId: string }>();
+  const [task, setTask] = useState<Task | undefined>(undefined);
 
   useEffect(() => {
     const fetchTaskDetails = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/tasks/${taskId}`);
-        setTask(response.data);
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/task/${taskId}`);
+        setTask(response.data.data);
       } catch (err) {
         handleApiError(err);
       }
@@ -31,21 +26,22 @@ const TaskDetails: React.FC = () => {
   }, [taskId]);
 
   return (
-    <div className='w-full p-5'>
-      <div className='relative min-h-screen max-w-2xl mx-auto p-5 shadow-lg border border-slate-200'>
-        <h1 className='text-2xl font-bold'>Task Details</h1>
-        <h1 className='text-lg font-semibold mt-6'>
-          Title: <span>{task?.taskNumber ?? 'N/A'}</span>
-        </h1>
-        <p className='text-md font-semibold text-gray-600 my-4'>
+    <div className='w-full p-4  sm:p-6 lg:p-8'>
+      <div className='relative min-h-screen max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-4 sm:p-6 lg:p-8 shadow-lg border border-slate-200 rounded-lg'>
+
+        <h1 className='text-xl sm: font-bold'>Task Details</h1>
+        <h2 className='text-base sm:text-lg font-semibold mt-4'>
+          Title: <span>Task{" "}{task?.title }</span>
+        </h2>
+        <p className='text-sm sm:text-md font-semibold text-gray-500 my-2'>
           Description: {task?.description ?? 'No description available'}
         </p>
-        <p className='text-sm font-semibold'>
+        <p className='text-xs text-gray-400 sm:text-sm font-semibold'>
           Created at: {task?.createdAt ? new Date(task.createdAt).toLocaleString() : 'No date available'}
         </p>
 
         <button
-          className='absolute bottom-5 right-5 rounded-lg p-2 bg-blue-600 text-white'
+          className='absolute bottom-4 right-4 w-24 font-semibold sm:w-20 rounded-lg p-2 sm: bg-blue-600 text-white'
           onClick={() => navigate(-1)}
         >
           Close
