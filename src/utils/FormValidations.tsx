@@ -22,3 +22,12 @@ export const signUpSchema = z.object({
   path: ['confirmPassword'],
    
 });
+
+
+
+export const taskSchema = z.object({
+    taskNumber: z.string().min(1,"Task number is required"), 
+    description: z.string().min(5, "Description must be at least 5 characters long"),
+});
+
+

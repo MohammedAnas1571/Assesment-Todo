@@ -30,14 +30,14 @@ const SignUp = () => {
     const onSubmit = async (data: LoginForm) => {
         try {
             const response = await axios.post(
-                `${import.meta.env.VITE_API_BASE_URL}/sign-up`,
+                `${import.meta.env.VITE_API_BASE_URL}/api/sign-up`,
                 data,
                 {
                     withCredentials: true,
                 }
             );
             if (response.data) {
-                navigate("/");
+                navigate("/login");
                 toast.success(response.data.message);
             }
         } catch (err) {
