@@ -4,9 +4,12 @@ import { loginSchema } from "../utils/FormValidations";
 import axios from "axios";
 import handleApiError from "../utils/HandleApiError";
 import toast from "react-hot-toast";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import Input from "../components/Input";
 import Oauth from "../components/Oauth";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAsUser } from "../redux/UserSlice";
+import { RootState } from "../redux/Store";
 
 type LoginForm = {
   email: string;
@@ -15,6 +18,8 @@ type LoginForm = {
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const { isUser } = useSelector((state: RootState) => state.user);
   const {
     register,
     handleSubmit,
@@ -22,6 +27,11 @@ const Login = () => {
   } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   });
+
+  
+  if (isUser) {
+    return <Navigate to={"/"} />;
+  }
 
   const onSubmit = async (data: LoginForm) => {
     try {
@@ -33,6 +43,7 @@ const Login = () => {
         }
       );
       if (response.data) {
+        dispatch(loginAsUser());
         navigate("/");
         toast.success(response.data.message);
       }

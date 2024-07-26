@@ -4,9 +4,11 @@ import { signUpSchema } from "../utils/FormValidations";
 import axios from "axios";
 import handleApiError from "../utils/HandleApiError";
 import toast from "react-hot-toast";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Navigate } from "react-router-dom";
 import Input from "../components/Input";
 import Oauth from "../components/Oauth";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/Store";
 
 type LoginForm = {
     firstname: string;
@@ -17,8 +19,8 @@ type LoginForm = {
 };
 
 const SignUp = () => {
-
     const navigate = useNavigate();
+    const { isUser } = useSelector((state: RootState) => state.user);
     const {
         register,
         handleSubmit,
@@ -26,7 +28,11 @@ const SignUp = () => {
     } = useForm<LoginForm>({
         resolver: zodResolver(signUpSchema),
     });
-
+    
+    if (isUser) {
+        return <Navigate to={"/"} />;
+      }
+    
     const onSubmit = async (data: LoginForm) => {
         try {
             const response = await axios.post(
@@ -46,10 +52,9 @@ const SignUp = () => {
     };
 
     return (
-
-        <div className="min-h-screen flex flex-col justify-center items-center">
+        <div className="min-h-screen mt-16 flex flex-col justify-center items-center">
             <h1 className="text-3xl font-bold text-blue-600 mb-4 text-left w-full max-w-md">
-                Login
+                Sign Up
             </h1>
             <div className="w-full max-w-md bg-white p-6 rounded-lg shadow-2xl shadow-gray-400 border-2 border-blue-600">
                 <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -65,7 +70,6 @@ const SignUp = () => {
                         type="text"
                         placeholder="Last Name"
                         {...register("lastname")}
-
                     />
                     {errors.lastname && (
                         <p className="text-sm text-red-500">{errors.lastname.message}</p>
@@ -95,25 +99,24 @@ const SignUp = () => {
                         <p className="text-sm text-red-500">{errors.confirmPassword.message}</p>
                     )}
 
-                    <button className="w-full bg-blue-600 text-white p-2 ">
-                        Login
+                    <button className="w-full bg-blue-600 text-white p-2 rounded">
+                        Sign Up
                     </button>
                 </form>
                 <div className="text-center mt-4">
                     <p className="font-semibold">
-                      Already have account?{" "}
+                        Already have an account?{" "}
                         <Link to="/login" className="text-blue-600 px-2">
                             Login
                         </Link>
                     </p>
                 </div>
                 <div className="text-center mt-3">
-                  <Oauth/>
+                    <Oauth />
                 </div>
             </div>
         </div>
+    );
+};
 
-    )
-}
-
-export default SignUp
+export default SignUp;

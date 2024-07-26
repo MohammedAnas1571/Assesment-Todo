@@ -13,7 +13,7 @@ const TaskDetails: React.FC = () => {
   useEffect(() => {
     const fetchTaskDetails = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/task/${taskId}`);
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/task/${taskId}`,{withCredentials:true});
         setTask(response.data.data);
       } catch (err) {
         handleApiError(err);
@@ -26,7 +26,7 @@ const TaskDetails: React.FC = () => {
   }, [taskId]);
 
   return (
-    <div className='w-full p-4  sm:p-6 lg:p-8'>
+    <div className='w-full p-4 mt-16  sm:p-6 lg:p-8'>
       <div className='relative min-h-screen max-w-full sm:max-w-md md:max-w-lg lg:max-w-xl mx-auto p-4 sm:p-6 lg:p-8 shadow-lg border border-slate-200 rounded-lg'>
 
         <h1 className='text-xl sm: font-bold'>Task Details</h1>
