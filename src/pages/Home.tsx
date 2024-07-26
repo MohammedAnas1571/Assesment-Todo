@@ -32,10 +32,6 @@ const Home: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    fetchTasks();
-  }, []);
-
   const debouncedFetchTasks = useCallback(debounce(fetchTasks, 300), []);
 
   useEffect(() => {
@@ -76,21 +72,21 @@ const Home: React.FC = () => {
   const doneTasks = tasks.filter(task => task.status === 'Done');
 
   return (
-    <div className="max-w-[1250px] px-4 mt-16">
-      <div className="max-w-[1050px] mx-auto p-3 mt-4">
+    <div className="max-w-[1250px] px-4 mt-16 mx-auto">
+      <div className="p-3 mt-4">
         <AddTaskDialog>
           <button className="bg-blue-600 text-center text-white p-2 rounded-md w-full sm:w-[150px]">Add Task</button>
         </AddTaskDialog>
         <div className="mt-5 border p-2 border-slate-200 shadow-md flex flex-col sm:flex-row justify-between items-center rounded-md">
           <div className="flex items-center w-full sm:w-auto mb-4 sm:mb-0">
             <p className="text-sm font-semibold">Search:</p>
-            <div className="relative ml-2">
+            <div className="relative ml-2 w-full sm:w-80">
               <input
                 type="text"
                 value={searchQuery}
                 onChange={handleSearchChange}
                 placeholder="Search"
-                className="w-96 py-1 px-2 border rounded-md focus:outline-none"
+                className="w-full py-1 px-2 border rounded-md focus:outline-none"
               />
               <FaSearch className="absolute right-2 top-2 text-gray-500" />
             </div>
@@ -114,7 +110,7 @@ const Home: React.FC = () => {
             <Droppable droppableId="Todo">
               {(provided) => (
                 <div
-                  className="w-full sm:w-[330px] min-h-[400px] bg-white border border-gray-200 rounded-lg shadow p-4"
+                  className="w-full sm:w-[300px] min-h-[300px] bg-white border border-gray-200 rounded-lg shadow p-4"
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
@@ -139,7 +135,7 @@ const Home: React.FC = () => {
             <Droppable droppableId="InProgress">
               {(provided) => (
                 <div
-                  className="w-full sm:w-[330px] min-h-[400px] bg-white border border-gray-200 rounded-lg shadow p-4"
+                  className="w-full sm:w-[300px] min-h-[300px] bg-white border border-gray-200 rounded-lg shadow p-4"
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >
@@ -164,7 +160,7 @@ const Home: React.FC = () => {
             <Droppable droppableId="Done">
               {(provided) => (
                 <div
-                  className="w-full sm:w-[330px] min-h-[400px] bg-white border border-gray-200 rounded-lg shadow p-4"
+                  className="w-full sm:w-[300px] min-h-[300px] bg-white border border-gray-200 rounded-lg shadow p-4"
                   ref={provided.innerRef}
                   {...provided.droppableProps}
                 >

@@ -4,8 +4,11 @@ import { app } from "../utils/firebase";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { loginAsUser, setProfilePhoto } from "../redux/UserSlice";
 
 const Oauth = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleGoogleAuth = async () => {
@@ -14,17 +17,20 @@ const Oauth = () => {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
 
-      const { displayName, email } = result.user;
+      const { displayName, email, photoURL } = result.user;
       const name = displayName ? displayName.split(" ") : [];
       const firstname = name[0] || "";
       const lastname = name[1] || "";
+      const profilePhoto = photoURL || 'path/to/default-avatar.png'; // Default avatar if not available
 
-      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/googleAuth`, { firstname, lastname, email }, {
+      const response = await axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/googleAuth`, { firstname, lastname, email, profilePhoto }, {
         withCredentials: true,
       });
 
       if (response.data) {
         navigate("/");
+        dispatch(loginAsUser());
+        dispatch(setProfilePhoto(response.data.data))
         toast.success(response.data.message);
       }
     } catch (err) {

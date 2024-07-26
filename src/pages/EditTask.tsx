@@ -38,7 +38,7 @@ const EditTask: React.FC = () => {
 
     const onSubmit = async (data: TaskFormData) => {
         try {
-            const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/task/${taskId}`, data);
+            const response = await axios.put(`${import.meta.env.VITE_API_BASE_URL}/api/task/${taskId}`, data,{withCredentials: true});
             toast.success(response.data.message);
             navigate(-1);
         } catch (err) {

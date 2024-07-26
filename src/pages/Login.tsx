@@ -8,7 +8,7 @@ import { useNavigate, Link, Navigate } from "react-router-dom";
 import Input from "../components/Input";
 import Oauth from "../components/Oauth";
 import { useDispatch, useSelector } from "react-redux";
-import { loginAsUser } from "../redux/UserSlice";
+import { loginAsUser, setProfilePhoto } from "../redux/UserSlice";
 import { RootState } from "../redux/Store";
 
 type LoginForm = {
@@ -44,6 +44,7 @@ const Login = () => {
       );
       if (response.data) {
         dispatch(loginAsUser());
+        dispatch(setProfilePhoto(response.data.data))
         navigate("/");
         toast.success(response.data.message);
       }

@@ -11,7 +11,7 @@ import { RootState } from '../redux/Store';
 const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isUser } = useSelector((state: RootState) => state.user);
+  const { isUser,profilePhoto } = useSelector((state: RootState) => state.user);
 
   const handleLogout = async () => {
     try {
@@ -30,13 +30,14 @@ const Header = () => {
 
   return (
     <div className='h-16 fixed top-0 w-full z-50 bg-blue-600 text-white '>
-      <div className='max-w-6xl mx-auto flex justify-between items-center h-full px-4 sm:px-6 lg:px-8'>
+      <div className='max-w-6xl mx-auto flex justify-between items-center h-full px-4 sm:px-6 lg:px-8 '>
         <div className='flex items-center space-x-3'>
           <AiFillCalendar size={25} />
           
         </div>
         <div className='flex space-x-4'>
           {isUser ? (
+           <>
             <AlertDialog
               title="Log Out"
               description="Are you sure you want to logout?"
@@ -44,6 +45,10 @@ const Header = () => {
             >
               <button className='bg-red-500 text-white px-4 py-1 rounded'>Logout</button>
             </AlertDialog>
+            
+              <img src={profilePhoto} alt="" className="w-10 h-10 rounded-full" />
+            
+            </>
           ) : (
             <>
               <NavLink

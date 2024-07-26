@@ -1,12 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
 
 const initialState = {
   isUser: false,
+  profilePhoto: "",
 };
 
-
 const userSlice = createSlice({
-  name: "user", 
+  name: "user",
   initialState,
   reducers: {
     loginAsUser: (state) => {
@@ -14,10 +15,14 @@ const userSlice = createSlice({
     },
     signOutUser: (state) => {
       state.isUser = false;
+      state.profilePhoto = ""; 
+    },
+    setProfilePhoto: (state, action: PayloadAction<string>) => {
+      state.profilePhoto = action.payload;
     },
   },
 });
 
-export const { loginAsUser, signOutUser } = userSlice.actions;
+export const { loginAsUser, signOutUser, setProfilePhoto } = userSlice.actions;
 
 export default userSlice.reducer;
