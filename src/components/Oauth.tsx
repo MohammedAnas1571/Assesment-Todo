@@ -28,10 +28,10 @@ const Oauth = () => {
       });
 
       if (response.data) {
-        navigate("/");
         dispatch(loginAsUser());
         dispatch(setProfilePhoto(response.data.data))
         toast.success(response.data.message);
+        navigate("/");
       }
     } catch (err) {
       handleApiError(err);

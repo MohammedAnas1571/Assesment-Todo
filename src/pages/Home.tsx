@@ -24,7 +24,7 @@ const Home: React.FC = () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/tasks`, {
         params: { search: query, sort },
-        withCredentials: true, // Include credentials
+        withCredentials: true, 
       });
       setTasks(response.data.data);
     } catch (err) {
